@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
+
 const makeRequest = require('./src/makeRequest');
 const { login, signup, forgotPassword } = require('./src/Controllers');
+const { UserRepository } = require('./src/Repositories/')
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -9,9 +11,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+UserRepository.connection()
+
 app.post('/login', makeRequest(login));
 app.post('/signup', makeRequest(signup));
-app.post('/forgotpassword', makeRequest(forgotPassword));
 
 app.use((req, res, next) => {
   res.status(404).send({ message: 'Not Found' });
