@@ -6,6 +6,9 @@ const { login, signup, forgotPassword } = require('./src/Controllers');
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.post('/login', makeRequest(login));
 app.post('/signup', makeRequest(signup));
 app.post('/forgotpassword', makeRequest(forgotPassword));
