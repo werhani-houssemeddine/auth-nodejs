@@ -1,0 +1,3 @@
+this function is responsible for handling the server request 
+it takes the request object from express send it to a controller function
+which is passed as parameter to this fn and return an express response object
