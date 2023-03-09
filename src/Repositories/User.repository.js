@@ -25,11 +25,28 @@ module.exports = class User{
   }
 
   static async findByProperty({ property, value }){
-    if(db == null) return null;
+    if(User.client === null) return null;
+    const users = await User.client.query(
+      `SELECT * FROM users WHERE ${property} = '${value}'`
+    );
+
+    return users.rows;
   }
 
   static async saveUser({ email, password, phoneNumber }){
-    if(db == null) return null;
+    if(User.client === null) return null;
+    const users = await User.client.query(
+      `
+        INSERT INTO users 
+        (email, password, phonenumber) 
+        VALUES ('${email}', '${password}', '${phoneNumber}')
+        RETURNING id 
+      `
+    );
 
+    return { 
+      state: users.rowCount === 1,
+      id: users.rows[0].id
+    }
   }
 }
