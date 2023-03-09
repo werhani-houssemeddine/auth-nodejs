@@ -16,7 +16,6 @@ module.exports = function makeRequest(controller) {
         res.status(httpResponse.status).send(httpResponse.body);
       })
       .catch(err => {
-        console.log('oop');
         res.status(500).send({ message: 'Internal Server Error' });
       })
   }
